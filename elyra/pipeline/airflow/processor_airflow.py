@@ -510,6 +510,10 @@ be fully qualified (i.e., prefixed with their package names).
             if pipeline_description is None:
                 pipeline_description = f"Created with Elyra {__version__} pipeline editor using `{pipeline.source}`."
 
+            schedule_interval = pipeline.schedule_interval
+            if schedule_interval is None:
+                schedule_interval = "@once"
+
             python_output = template.render(
                 operations_list=ordered_ops,
                 pipeline_name=pipeline_instance_id,
@@ -518,6 +522,7 @@ be fully qualified (i.e., prefixed with their package names).
                 kube_config_path=None,
                 is_paused_upon_creation="False",
                 in_cluster="True",
+                schedule_interval=schedule_interval,
                 pipeline_description=pipeline_description,
                 processor=self,
             )

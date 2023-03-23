@@ -8,7 +8,7 @@ args = {
 dag = DAG(
     '{{ pipeline_name }}',
     default_args=args,
-    schedule_interval='@once',
+    schedule_interval='{{ schedule_interval }}',
     start_date=days_ago(1),
     description="""
 {{ pipeline_description|replace("\"\"\"", "\\\"\\\"\\\"") }}

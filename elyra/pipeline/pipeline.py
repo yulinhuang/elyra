@@ -354,6 +354,7 @@ class Pipeline(object):
         runtime_config: Optional[str] = None,
         source: Optional[str] = None,
         description: Optional[str] = None,
+        schedule_interval: Optional[str] = None,
         pipeline_properties: Optional[Dict[str, Any]] = None,
         pipeline_parameters: ElyraPropertyList = None,
     ):
@@ -365,6 +366,7 @@ class Pipeline(object):
         :param runtime_config: Runtime configuration that should be used to submit the pipeline to execution
         :param source: The pipeline source, e.g. a pipeline file or a notebook.
         :param description: Pipeline description
+        :param schedule_interval: The interval at which the pipeline should be scheduled to run
         :param pipeline_properties: Key/value pairs representing the properties of this pipeline
         :param pipeline_parameters: an ElyraPropertyList of pipeline parameters
         """
@@ -378,6 +380,7 @@ class Pipeline(object):
         self._name = name
         self._description = description
         self._source = source
+        self._schedule_interval = schedule_interval
         self._runtime = runtime
         self._runtime_config = runtime_config
         self._pipeline_properties = pipeline_properties or {}
@@ -435,6 +438,13 @@ class Pipeline(object):
         """
         return self._description
 
+    @property
+    def schedule_interval(self) -> Optional[str]:
+        """
+        Pipeline schedule interval
+        """
+        return self._schedule_interval
+
     def contains_generic_operations(self) -> bool:
         """
         Returns a truthy value indicating whether the pipeline contains
@@ -452,6 +462,7 @@ class Pipeline(object):
                 and self.name == other.name
                 and self.source == other.source
                 and self.description == other.description
+                and self.schedule_interval == other.schedule_interval
                 and self.runtime == other.runtime
                 and self.operations == other.operations
             )
