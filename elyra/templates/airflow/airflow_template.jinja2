@@ -23,8 +23,8 @@ dag = DAG(
 {% endfor %}
 {% else %}
 from airflow.kubernetes.secret import Secret
-from airflow.contrib.kubernetes.volume import Volume
-from airflow.contrib.kubernetes.volume_mount import VolumeMount
+from kubernetes.client.models import V1Volume as Volume
+from kubernetes.client.models import V1VolumeMount as VolumeMount
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 {% endif %}
 
@@ -67,7 +67,7 @@ op_{{ operation.id|regex_replace }} = KubernetesPodOperator(name='{{ operation.n
                                                             labels={{ processor.render_labels(operation.elyra_props) }},
                                                             tolerations=[{{ processor.render_tolerations(operation.elyra_props) }}],
                                                             in_cluster={{ in_cluster }},
-                                                            config_file="{{ kube_config_path }}",
+                                                            config_file={{ kube_config_path }},
 {% endif %}
                                                             dag=dag)
     {% if operation.image_pull_policy %}
