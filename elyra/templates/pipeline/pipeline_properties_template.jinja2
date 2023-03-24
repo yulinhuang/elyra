@@ -26,9 +26,9 @@
     "schedule_interval": {
       "title": "Recurring pipeline interval",
       "type": "string",
+      "enum": ["@once", "@hourly", "@daily", "@weekly", "@monthly", "@yearly"],
       "uihints": {
-        "ui:placeholder": "@once",
-        "ui:widget": "textarea"
+        "ui:placeholder": "@once"
       }
     },
     "pipeline_defaults": {

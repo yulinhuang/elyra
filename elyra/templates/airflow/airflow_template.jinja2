@@ -14,6 +14,7 @@ dag = DAG(
 {{ pipeline_description|replace("\"\"\"", "\\\"\\\"\\\"") }}
     """,
     is_paused_upon_creation={{ is_paused_upon_creation }},
+    catchup=False,
 )
 
 {% for key, operation in operations_list.items() %}
