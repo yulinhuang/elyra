@@ -79,12 +79,14 @@ class RuntimesSchemas(ElyraSchemasProvider):
         # determine if both airflow and kfp are needed and note if kfp is needed for later
         runtime_schemas = []
         schemas = self.get_local_schemas_by_schemaspace(Runtimes.RUNTIMES_SCHEMASPACE_ID)
+        self.log.error(f"DEBUG {self._runtime_processor_names} runtime_processor_names")
+        self.log.error(f"DEBUG {Runtimes.RUNTIMES_SCHEMASPACE_ID} schemas names")
         for schema in schemas:
             if schema["name"] in self._runtime_processor_names:
                 runtime_schemas.append(schema)
                 if schema["name"] == "kfp":
                     kfp_schema_present = True
-                elif schema["name"] == "airflow":
+                elif schema["name"] == "airflow" or schema["name"] == "airflow_local":
                     airflow_schema_present = True
             else:
                 self.log.error(
@@ -121,7 +123,7 @@ class RuntimesSchemas(ElyraSchemasProvider):
             git_type_enum = list(map(lambda c: c.name, SupportedGitTypes.get_enabled_types()))
             git_type_default = SupportedGitTypes.get_default_type().name
             for schema in runtime_schemas:
-                if schema["name"] == "airflow":
+                if schema["name"] == "airflow" or schema["name"] == "airflow_local":
                     if schema["properties"]["metadata"]["properties"].get("git_type") is not None:
                         schema["properties"]["metadata"]["properties"]["git_type"]["enum"] = git_type_enum
                         schema["properties"]["metadata"]["properties"]["git_type"]["default"] = git_type_default

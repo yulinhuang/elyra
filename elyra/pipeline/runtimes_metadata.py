@@ -35,6 +35,8 @@ class RuntimesMetadata(Metadata):
                 self.metadata["runtime_type"] = "KUBEFLOW_PIPELINES"
             elif self.schema_name == "airflow":
                 self.metadata["runtime_type"] = "APACHE_AIRFLOW"
+            elif self.schema_name == "airflow_local":
+                self.metadata["runtime_type"] = "APACHE_AIRFLOW_LOCAL"
             elif self.schema_name == "argo":
                 self.metadata["runtime_type"] = "ARGO"
             else:
