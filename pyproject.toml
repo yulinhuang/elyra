@@ -130,6 +130,7 @@ metadata-tests = "elyra.tests.metadata.test_utils:MetadataTestSchemasProvider"
 local = "elyra.pipeline.local.processor_local:LocalPipelineProcessor"
 airflow = "elyra.pipeline.airflow.processor_airflow:AirflowPipelineProcessor"
 kfp = "elyra.pipeline.kfp.processor_kfp:KfpPipelineProcessor"
+idoml = "elyra.pipeline.idoml.processor_idoml:IdomlPipelineProcessor"
 
 [project.entry-points."elyra.component.catalog_types"]
 url-catalog = "elyra.pipeline.catalog_connector:UrlComponentCatalogConnector"

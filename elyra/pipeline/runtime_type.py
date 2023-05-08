@@ -39,6 +39,7 @@ class RuntimeProcessorType(Enum):
     ######################################
     # Add new entry here for each new type
     ######################################
+    IDOML = "Idoml"
 
     @staticmethod
     def get_instance_by_name(name: str) -> "RuntimeProcessorType":
@@ -83,6 +84,8 @@ class RuntimeTypeResources(object):
             return ArgoResources(runtime_enabled=runtime_enabled)
         if runtime_type == RuntimeProcessorType.LOCAL:
             return LocalResources(runtime_enabled=runtime_enabled)
+        if runtime_type == RuntimeProcessorType.IDOML:
+            return IdomlResources(runtime_enabled=runtime_enabled)
         raise ValueError(f"Runtime type {runtime_type} is not recognized.")
 
     @property
@@ -149,3 +152,11 @@ class LocalResources(RuntimeTypeResources):
 ###########################################################
 # Add new platform info definitions here for each new type
 ###########################################################
+class IdomlResources(RuntimeTypeResources):
+    """Holds static information relative to Apache Airflow processors"""
+
+    type = RuntimeProcessorType.IDOML
+    icon_endpoint = "static/elyra/airflow.svg"
+    export_file_types = [
+        {"id": "py", "display_name": "Idoml via Apache Airflow: Airflow domain-specific language Python code"}
+    ]

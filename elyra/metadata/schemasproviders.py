@@ -80,6 +80,7 @@ class RuntimesSchemas(ElyraSchemasProvider):
         runtime_schemas = []
         schemas = self.get_local_schemas_by_schemaspace(Runtimes.RUNTIMES_SCHEMASPACE_ID)
         for schema in schemas:
+            self.log.error(f"schema name '{schema['name']}'  ")
             if schema["name"] in self._runtime_processor_names:
                 runtime_schemas.append(schema)
                 if schema["name"] == "kfp":
