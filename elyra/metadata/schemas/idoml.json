@@ -19,7 +19,7 @@
     },
     "display_name": {
       "title": "Display Name",
-      "description": "Display name of this IDOML configuration",
+      "description": "Display name of this IDOML (Apache Airflow) configuration",
       "type": "string",
       "minLength": 1
     },
@@ -41,63 +41,63 @@
           "description": "Description of this IDOML (Apache Airflow) configuration",
           "type": "string"
         },
-        "api_endpoint": {
-          "title": "IDOML (Apache Airflow) UI Endpoint",
-          "description": "The IDOML (Apache Airflow) UI endpoint",
+        "scheduler_type": {
+          "title": "Schduler server type",
+          "description": "The type of scheduler which is deployed, currently only Apache Airflow is supported",
           "type": "string",
-          "format": "uri",
+          "enum": ["Apache Airflow"],
+          "default": "Apache Airflow",
           "uihints": {
-            "category": "IDOML (Apache Airflow)",
+            "category": "IDOML Scheduler server (Apache Airflow)",
             "ui:placeholder": "https://your-airflow-webserver:port"
           }
         },
-        "user_namespace": {
-          "title": "IDOML (Apache Airflow) User Namespace",
-          "description": "The IDOML (Apache Airflow) user namespace used to run DAG workflows",
+        "api_endpoint": {
+          "title": "IDOML Scheduler UI Endpoint",
+          "description": "The IDOML Scheduler server UI endpoint, e.g. http://localhost:8080",
           "type": "string",
-          "pattern": "^[a-z0-9][-a-z0-9]*[a-z0-9]$",
-          "maxLength": 63,
-          "default": "default",
+          "format": "uri",
           "uihints": {
-            "category": "IDOML (Apache Airflow)"
+            "category": "IDOML Scheduler server (Apache Airflow)",
+            "ui:placeholder": "https://your-airflow-webserver:port"
           }
         },
         "git_type": {
-          "title": "Git type",
-          "description": "Git provider",
+          "title": "Git hosting server type",
+          "description": "Git provider, the server type where the git repository is stored",
           "type": "string",
-          "enum": ["{GIT_TYPES_PLACEHOLDER}"],
-          "default": "{GIT_DEFAULT_TYPE_PLACEHOLDER}",
+          "enum": ["GITLAB", "GITHUB", "PRIVATE GITLAB"],
+          "default": "GITHUB",
           "uihints": {
-            "category": "IDOML (Apache Airflow)"
+            "category": "Git repository settings"
           }
         },
         "github_api_endpoint": {
-          "title": "GitHub or GitLab server API Endpoint",
-          "description": "The GitHub or GitLab server URL / API endpoint - Public or Enterprise",
+          "title": "Git hosting server API Endpoint",
+          "description": "The server URL / API endpoint - Public or Enterprise",
           "type": "string",
           "format": "uri",
           "default": "https://api.github.com",
           "uihints": {
-            "category": "IDOML (Apache Airflow)",
+            "category": "Git repository settings",
             "ui:placeholder": "https://your-github-or-gitlab-endpoint"
           }
         },
         "github_repo": {
-          "title": "GitHub or GitLab DAG Repository",
-          "description": "Existing repository where DAGs are stored",
+          "title": "Git hosting server Repository",
+          "description": "The repository where DAGs are stored, which is syncronized with the IDOML Scheduler server",
           "type": "string",
           "uihints": {
-            "category": "IDOML (Apache Airflow)",
+            "category": "Git repository settings",
             "ui:placeholder": "user-or-org/dag-repo-name"
           }
         },
         "github_branch": {
-          "title": "GitHub or GitLab DAG Repository Branch",
+          "title": "Git hosting server Repository Branch",
           "description": "Existing branch in the repository where DAGs are stored",
           "type": "string",
           "uihints": {
-            "category": "IDOML (Apache Airflow)"
+            "category": "Git repository settings"
           }
         },
         "github_repo_token": {
@@ -106,7 +106,7 @@
           "type": "string",
           "uihints": {
             "ui:field": "password",
-            "category": "IDOML (Apache Airflow)"
+            "category": "Git repository settings"
           }
         },
         "cos_endpoint": {
@@ -144,11 +144,7 @@
           "title": "Cloud Object Storage Authentication Type",
           "description": "Authentication type Elyra uses to authenticate with Cloud Object Storage",
           "type": "string",
-          "enum": [
-            "AWS_IAM_ROLES_FOR_SERVICE_ACCOUNTS",
-            "KUBERNETES_SECRET",
-            "USER_CREDENTIALS"
-          ],
+          "enum": ["AWS_IAM_ROLES_FOR_SERVICE_ACCOUNTS", "USER_CREDENTIALS"],
           "default": "USER_CREDENTIALS",
           "uihints": {
             "category": "Cloud Object Storage"
@@ -195,7 +191,16 @@
           }
         }
       },
-      "required": ["api_endpoint"]
+      "required": [
+        "api_endpoint",
+        "cos_endpoint",
+        "cos_auth_type",
+        "cos_bucket",
+        "github_api_endpoint",
+        "github_branch",
+        "github_repo_token",
+        "github_repo"
+      ]
     }
   },
   "required": ["schema_name", "display_name", "metadata"]
