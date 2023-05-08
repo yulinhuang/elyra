@@ -27,7 +27,7 @@ from elyra.util.path import get_absolute_path
 
 
 class IdomlPipelineProcessor(RuntimePipelineProcessor):
-    _type = RuntimeProcessorType.APACHE_AIRFLOW
+    _type = RuntimeProcessorType.IDOML
     _name = "idoml"
 
     # Provide users with the ability to identify a writable directory in the
